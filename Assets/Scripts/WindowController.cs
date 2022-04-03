@@ -16,8 +16,8 @@ public class WindowController : MonoBehaviour
 
     public void MinimizeWindow()
     {
-        gameObject.SetActive(false);
-        windowButtonController.ChangeButtonState(false);
+        //gameObject.SetActive(false);
+        //windowButtonController.ChangeButtonState(false);
     }
 
     public void CloseWindow()

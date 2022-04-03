@@ -8,14 +8,16 @@ public class OpenWindow : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject windowType;
     [SerializeField] private GameObject windowTitle;
+    [SerializeField] private GameObject game;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.clickCount == 2)
         {
-            //windowTitle = GetComponentInChildren<TextMeshProUGUI>();
-            GameObject videoWindow = Instantiate(windowType, transform.parent);
-            videoWindow.GetComponentInChildren<TextMeshProUGUI>().SetText(windowTitle.GetComponent<TextMeshProUGUI>().text);
+            Debug.Log("Clicked");
+            GameObject window = Instantiate(windowType, transform.parent);
+            window.GetComponentInChildren<TextMeshProUGUI>().SetText(windowTitle.GetComponent<TextMeshProUGUI>().text);
+            if (game) game.SetActive(true);
         }
     }
 

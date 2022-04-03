@@ -19,6 +19,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         lastMousePosition = eventData.position;
         canvas = GetComponentInParent<Canvas>();
         canvasRect = canvas.GetComponent<RectTransform>();
+        Debug.Log(canvasRect.name + " canvas rect");
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -26,14 +27,14 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         currentMousePosition = eventData.position;
         offset = currentMousePosition - lastMousePosition;
         rect = GetComponent<RectTransform>();
-
+        Debug.Log(rect.name + " rect");
         newPosition = rect.position + new Vector3(offset.x, offset.y, 0);
         oldPosition = rect.position;
         rect.position = newPosition;
 
         if (!IsRectTransformInsideSreen(rect))
         {
-            rect.position = oldPosition;
+            //rect.position = oldPosition;
         }
 
         lastMousePosition = currentMousePosition;
@@ -50,7 +51,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         rectTransform.GetWorldCorners(corners);
         int visibleCorners = 0;
         Rect rect = new Rect(canvasRect.rect.position.x, canvasRect.rect.position.y, canvasRect.rect.width, canvasRect.rect.height);
-        //Rect rect = new Rect(0, 0, 1920, 1080);
+
         foreach (Vector3 corner in corners)
         {
             if (rect.Contains(corner))
