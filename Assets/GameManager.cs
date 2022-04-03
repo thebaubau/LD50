@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject mainPanel;
+    public GameObject monitorScreen;
+    public GameObject powerButton;
+
     void Start()
     {
         
@@ -13,6 +16,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (mainPanel.activeSelf) return;
+        if (powerButton.activeSelf) return;
+
+        //if (!mainPanel.activeSelf)
+        //{
+        //    powerButton.SetActive(true);
+        //}
     }
 }
