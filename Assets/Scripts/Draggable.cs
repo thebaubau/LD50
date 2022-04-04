@@ -12,25 +12,58 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     private Vector3 oldPosition, newPosition;
     private RectTransform rect = null;
     private RectTransform canvasRect = null;
-    Canvas canvas = null;
+    
+    private GameObject canvas = null;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         lastMousePosition = eventData.position;
-        canvas = GetComponentInParent<Canvas>();
+        rect = GetComponent<RectTransform>();
+        canvas = GameObject.FindGameObjectWithTag("UI Canvas");
         canvasRect = canvas.GetComponent<RectTransform>();
-        Debug.Log(canvasRect.name + " canvas rect");
+        //Debug.Log(canvasRect.name + " canvas rect");
+        //Debug.Log(canvasRect.rect.position.x);
+        //Debug.Log(canvasRect.rect.position.y);
+        //Debug.Log(canvasRect.anchoredPosition.x);
+        //Debug.Log(canvasRect.anchoredPosition.y);
+        //Debug.Log(canvasRect.rect.width);
+        //Debug.Log(canvasRect.rect.height);
+
+        Vector2 hitLocation = new Vector2();
+        //currentMousePosition = eventData.worldPosition;
+        //currentMousePosition = eventData.pointerCurrentRaycast.screenPosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect, Input.mousePosition, Camera.main, out hitLocation);
+
+        Debug.Log(hitLocation + " on start drag");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         currentMousePosition = eventData.position;
+
+        Vector2 hitLocation = new Vector2();
+        //currentMousePosition = eventData.worldPosition;
+        //currentMousePosition = eventData.pointerCurrentRaycast.screenPosition;
+        //RectTransformUtility.ScreenPointToLocalPointInRectangle(
+        //    canvasRect, Input.mousePosition, Camera.main, out hitLocation);
+
+        //currentMousePosition = hitLocation;
+
+        Debug.Log(currentMousePosition + " current mouse pos");
         offset = currentMousePosition - lastMousePosition;
-        rect = GetComponent<RectTransform>();
-        Debug.Log(rect.name + " rect");
+        //rect = GetComponent<RectTransform>();
+
+        //Debug.Log(rect.name + " rect");
         newPosition = rect.position + new Vector3(offset.x, offset.y, 0);
+        //newPosition = currentMousePosition;
         oldPosition = rect.position;
+
+        //Debug.Log(oldPosition + " old position");
+        Debug.Log(newPosition + " new position");
+
         rect.position = newPosition;
+        //Debug.Log(rect.position + " rect position");
 
         if (!IsRectTransformInsideSreen(rect))
         {
@@ -49,8 +82,10 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         bool isInside = false;
         Vector3[] corners = new Vector3[4];
         rectTransform.GetWorldCorners(corners);
+        //rectTransform.GetLocalCorners(corners);
         int visibleCorners = 0;
-        Rect rect = new Rect(canvasRect.rect.position.x, canvasRect.rect.position.y, canvasRect.rect.width, canvasRect.rect.height);
+        Rect rect = new Rect(0, 0, canvasRect.rect.width / 2, canvasRect.rect.height / 2);
+        //Rect rect = new Rect(0, 0, 1280, 1024);
 
         foreach (Vector3 corner in corners)
         {
