@@ -8,6 +8,7 @@ TagManager:
   - WIndowTitle
   - Ball
   - UI Canvas
+  - Task
   layers:
   - Default
   - TransparentFX

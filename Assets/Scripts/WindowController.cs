@@ -10,8 +10,8 @@ public class WindowController : MonoBehaviour
 
     private void OnEnable()
     {
-        button = NavigationController.Instance.AssignButton();
-        windowButtonController = button.gameObject.GetComponent<WindowButtonController>();
+        //button = NavigationController.Instance.AssignButton();
+        //windowButtonController = button.gameObject.GetComponent<WindowButtonController>();
     }
 
     public void MinimizeWindow()
@@ -22,7 +22,7 @@ public class WindowController : MonoBehaviour
 
     public void CloseWindow()
     {
-        button.gameObject.SetActive(false);
-        Destroy(gameObject);
+        //button.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }

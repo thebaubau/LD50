@@ -15,8 +15,9 @@ public class OpenWindow : MonoBehaviour, IPointerClickHandler
         if (eventData.clickCount == 2)
         {
             Debug.Log("Clicked");
-            GameObject window = Instantiate(windowType, transform.parent);
-            window.GetComponentInChildren<TextMeshProUGUI>().SetText(windowTitle.GetComponent<TextMeshProUGUI>().text);
+            //GameObject window = Instantiate(windowType, transform.parent);
+            windowType.SetActive(true);
+            windowType.GetComponentInChildren<TextMeshProUGUI>().SetText(windowTitle.GetComponent<TextMeshProUGUI>().text);
             if (game) game.SetActive(true);
         }
     }

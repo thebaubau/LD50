@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler
 {
     private Vector2 lastMousePosition;
     private Vector2 currentMousePosition;
@@ -19,6 +19,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
     {
         lastMousePosition = eventData.position;
         rect = GetComponent<RectTransform>();
+        rect.SetAsLastSibling();
         canvas = GameObject.FindGameObjectWithTag("UI Canvas");
         canvasRect = canvas.GetComponent<RectTransform>();
         //Debug.Log(canvasRect.name + " canvas rect");
@@ -29,20 +30,16 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         //Debug.Log(canvasRect.rect.width);
         //Debug.Log(canvasRect.rect.height);
 
-        Vector2 hitLocation = new Vector2();
+        //Vector2 hitLocation = new Vector2();
         //currentMousePosition = eventData.worldPosition;
         //currentMousePosition = eventData.pointerCurrentRaycast.screenPosition;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRect, Input.mousePosition, Camera.main, out hitLocation);
-
-        Debug.Log(hitLocation + " on start drag");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         currentMousePosition = eventData.position;
 
-        Vector2 hitLocation = new Vector2();
+        //Vector2 hitLocation = new Vector2();
         //currentMousePosition = eventData.worldPosition;
         //currentMousePosition = eventData.pointerCurrentRaycast.screenPosition;
         //RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -50,7 +47,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
         //currentMousePosition = hitLocation;
 
-        Debug.Log(currentMousePosition + " current mouse pos");
+        //Debug.Log(currentMousePosition + " current mouse pos");
         offset = currentMousePosition - lastMousePosition;
         //rect = GetComponent<RectTransform>();
 
@@ -60,7 +57,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         oldPosition = rect.position;
 
         //Debug.Log(oldPosition + " old position");
-        Debug.Log(newPosition + " new position");
+        //Debug.Log(newPosition + " new position");
 
         rect.position = newPosition;
         //Debug.Log(rect.position + " rect position");
@@ -75,6 +72,11 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        rect.SetAsLastSibling();
     }
 
     private bool IsRectTransformInsideSreen(RectTransform rectTransform)

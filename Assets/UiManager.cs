@@ -6,9 +6,17 @@ using UnityEngine;
 
 public class UiManager : MonoBehaviour
 {
-    public GameObject taskList;
-
+    public GameObject generalCanvas;
+    public GameObject startPanel;
+    public GameObject winPanel;
     public TextMeshProUGUI winningQuote;
+    public GameObject background;
+
+    public Sprite[] bgSprites;
+    public bool mouseBought = false;
+
+    private Animator canvasAnimator;
+    private SpriteRenderer bgSprite;
 
     private string[] quotes = new string[]
     {
@@ -18,7 +26,6 @@ public class UiManager : MonoBehaviour
         "Wouldn't it be great if money were as easy to make as it is to spend?",
         "If you feel guilty about doing nothing at the end of the day, you have procrastinated improperly. Begin again tomorrow with a better attitude.",
         "If you search \"psychology of procrastination\" online, you'll notice a lot of experts have too much time on their hands."
-
     };
 
     private static UiManager instance;
@@ -38,13 +45,19 @@ public class UiManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        canvasAnimator = generalCanvas.GetComponent<Animator>();
+        bgSprite = background.GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetBgSprite(Sprite sprite)
     {
-        // if all task are complete trigger win screen
+        bgSprite.sprite = sprite;
+    }
+
+    public void AddMouse()
+    {
+        mouseBought = true;
+        bgSprite.sprite = bgSprites[0];
     }
 
     public void Win()
@@ -54,10 +67,12 @@ public class UiManager : MonoBehaviour
 
     private IEnumerator WinGame()
     {
+        startPanel.SetActive(false);
+        winPanel.SetActive(true);
         winningQuote.text = quotes[UnityEngine.Random.Range(0, quotes.Length - 1)];
-        // Play animation to show winning quote
-        // yield animation time
-        // show restart button
+        canvasAnimator.Play("Win");
+        generalCanvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
         yield return null;
     }
 }

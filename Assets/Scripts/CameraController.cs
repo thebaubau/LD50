@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
 
 
     [SerializeField] private AnimationClip cameraZoomInOut;
+    [SerializeField] private GameObject scrollTutorial;
 
     public static CameraController Instance
     {
@@ -46,6 +47,7 @@ public class CameraController : MonoBehaviour
                 animator.StopPlayback();
                 scroolingUp = false;
                 scroolingDown = true;
+
                 Debug.Log("Scroll up");
                 //animator.StartPlayback();
                 //animator.speed = 1f;
@@ -62,11 +64,13 @@ public class CameraController : MonoBehaviour
                 animator.StopPlayback();
                 scroolingUp = true;
                 scroolingDown = false;
+
                 Debug.Log("Scroll down");
                 //animator.StartPlayback();
                 //animator.speed = -1f;
                 animator.SetFloat("Direction", 1);
                 animator.Play("Zoom In", 0, timeUnder);
+                scrollTutorial.SetActive(false);
             }
         }
     }

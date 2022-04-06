@@ -37,9 +37,9 @@ public class NavigationController : MonoBehaviour
 
             if (!windowButton.activeSelf)
             {
-                windowButton.SetActive(true);
-                windowButton.GetComponent<WindowButtonController>().ChangeButtonState(true);
-                return windowButton.GetComponent<Button>();
+                //windowButton.SetActive(true);
+                //windowButton.GetComponent<WindowButtonController>().ChangeButtonState(true);
+                //return windowButton.GetComponent<Button>();
             }   
         }
         return null;

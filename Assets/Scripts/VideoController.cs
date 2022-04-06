@@ -24,4 +24,9 @@ public class VideoController : MonoBehaviour
         play.gameObject.SetActive(true);
         pause.gameObject.SetActive(false);
     }
+
+    private void OnDisable()
+    {
+        videoPlayer.frame = 0;
+    }
 }

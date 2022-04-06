@@ -20,6 +20,7 @@ public class MainMenuAnimationController : MonoBehaviour
             if (transitioned) return;
             animator.SetTrigger("Transition");
             transitioned = true;
+            gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
         }
     }
 
