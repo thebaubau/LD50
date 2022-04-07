@@ -67,6 +67,7 @@ public class UiManager : MonoBehaviour
 
     private IEnumerator WinGame()
     {
+        yield return new WaitForSeconds(3);
         startPanel.SetActive(false);
         winPanel.SetActive(true);
         winningQuote.text = quotes[UnityEngine.Random.Range(0, quotes.Length - 1)];

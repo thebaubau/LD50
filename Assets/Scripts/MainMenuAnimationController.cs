@@ -18,10 +18,17 @@ public class MainMenuAnimationController : MonoBehaviour
         if (Input.anyKey)
         {
             if (transitioned) return;
-            animator.SetTrigger("Transition");
-            transitioned = true;
-            gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            StartCoroutine(FadeTitle(1));
         }
+    }
+
+    private IEnumerator FadeTitle(float time)
+    {
+        animator.Play("Fade");
+        yield return new WaitForSeconds(time);
+        transitioned = true;
+        UiManager.Instance.startPanel.SetActive(false);
+        gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
 }

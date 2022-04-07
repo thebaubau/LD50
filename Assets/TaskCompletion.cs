@@ -30,6 +30,7 @@ public class TaskCompletion : MonoBehaviour
         public int taskId { get; set; }
         public bool hasInput { get; set; }
         public string taskString { get; set; }
+        public string[] correctAnswer { get; set; }
     }
 
     class GameTask
@@ -37,6 +38,7 @@ public class TaskCompletion : MonoBehaviour
         public int taskId { get; set; }
         public string taskString { get; set; }
         public bool hasInput { get; set; }
+        public string[] correctAnswer { get; set; }
     }
 
     private List<GameTask> allTasks = new List<GameTask>();
@@ -56,21 +58,24 @@ public class TaskCompletion : MonoBehaviour
 
     private void CreateTaskList()
     {
-        allTasks.Add(new GameTask() { taskId = 0, taskString = "Buy a mouse from Llamazon", hasInput = false });
-        allTasks.Add(new GameTask() { taskId = 1, taskString = "Turn off Monitor", hasInput = false });
-        //allTasks.Add(new GameTask() { taskId = 2, taskString = "Complete the sentence:", hasInput = true });
-        allTasks.Add(new GameTask() { taskId = 3, taskString = "Upgrade PC", hasInput = false });
-        allTasks.Add(new GameTask() { taskId = 4, taskString = "Watch a video", hasInput = false });
-        allTasks.Add(new GameTask() { taskId = 5, taskString = "Score 10 at PONG", hasInput = false });
-        allTasks.Add(new GameTask() { taskId = 6, taskString = "Too much light in the room", hasInput = false });
-        //allTasks.Add(new GameTask() { taskId = 7, taskString = "What is the book talking about?", hasInput = true });
-        //allTasks.Add(new GameTask() { taskId = 8, taskString = "Use command line to close PC", hasInput = false });
+        allTasks.Add(new GameTask() { taskId = 0, taskString = "Buy a mouse from Llamazon", hasInput = false, correctAnswer = null });
+        allTasks.Add(new GameTask() { taskId = 1, taskString = "Turn off Monitor", hasInput = false, correctAnswer = null });
+        allTasks.Add(new GameTask() { taskId = 2, taskString = "Do It _____", hasInput = true, correctAnswer = new string[] { "later" } });
+        allTasks.Add(new GameTask() { taskId = 3, taskString = "Upgrade PC", hasInput = false, correctAnswer = null });
+        allTasks.Add(new GameTask() { taskId = 4, taskString = "Watch a video", hasInput = false, correctAnswer = null });
+        allTasks.Add(new GameTask() { taskId = 5, taskString = "Score 10 at PONG", hasInput = false, correctAnswer = null });
+        allTasks.Add(new GameTask() { taskId = 6, taskString = "Too much light in the room", hasInput = false, correctAnswer = null });
+        allTasks.Add(new GameTask() { 
+            taskId = 7, 
+            taskString = "What is the book talking about?", 
+            hasInput = true, 
+            correctAnswer = new string[] { "procrastination", "procrastinator", "a procrastinator", "the procrastinator", "procrastinating" } });
+        //allTasks.Add(new GameTask() { taskId = 8, taskString = "Use command line to close PC", hasInput = false, correctAnswer = null });
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (taskCount == 4 && !gameDone)
+        if (taskCount == 7 && !gameDone)
         {
             gameDone = true;
             UiManager.Instance.Win();
@@ -81,6 +86,7 @@ public class TaskCompletion : MonoBehaviour
     {
         int taskCount = GetComponentsInChildren<Toggle>().Length;
 
+        // TODO: Maybe remove this 
         tasks.Add(0, new Task
         {
             taskToggle = GetComponentsInChildren<Toggle>()[0],
@@ -88,7 +94,8 @@ public class TaskCompletion : MonoBehaviour
             taskInput = GetComponentsInChildren<TMP_InputField>()[0],
             taskId = allTasks[0].taskId,
             taskString = allTasks[0].taskString,
-            hasInput = allTasks[0].hasInput
+            hasInput = allTasks[0].hasInput,
+            correctAnswer = allTasks[0].correctAnswer
         });
         
         int[] arr = Enumerable.Range(1, allTasks.Count - 1).ToArray();
@@ -105,45 +112,54 @@ public class TaskCompletion : MonoBehaviour
                 taskInput = GetComponentsInChildren<TMP_InputField>()[i],
                 taskId = allTasks[randomTask].taskId,
                 taskString = allTasks[randomTask].taskString,
-                hasInput = allTasks[randomTask].hasInput
+                hasInput = allTasks[randomTask].hasInput,
+                correctAnswer = allTasks[randomTask].correctAnswer
             });
         }
     }
 
     public void AssignRoundTasks()
     {
-        for (int i = 1; i < tasks.Count; i++)
+        for (int i = 0; i < tasks.Count; i++)
         {
             tasks[i].taskText.text = tasks[i].taskString;
 
-            if (tasks[i].hasInput)
-            {
-                tasks[i].taskInput.gameObject.SetActive(true);
-            } 
-            else
-            {
-                tasks[i].taskInput.gameObject.SetActive(false);
-            }
+            tasks[i].taskInput.gameObject.SetActive(tasks[i].hasInput);
         }
     }
 
     public void SetTaskComplete(int id)
     {
-        //Debug.Log("Updating Task");
-        //Debug.Log(id + " sent Id");
         for (int i = 0; i < tasks.Count; i++)
         {
-            //Debug.Log(i + " iteration");
-            //Debug.Log(tasks[i].taskId + " task ID");
-            
             if (tasks[i].taskId == id)
             {
-                //Debug.Log(tasks[i].taskId + " activated  task ID");
                 if (tasks[i].taskToggle.isOn == true) return;
 
                 tasks[i].taskToggle.isOn = true;
                 TaskCount += 1;
                 return;
+            }
+        }
+    }
+
+    public void CorrectAnswer() 
+    {
+        for (int i = 0; i < tasks.Count; i++)
+        {
+            if (!tasks[i].taskInput.enabled) return;
+            if (tasks[i].taskToggle.isOn) continue;
+
+            if (tasks[i].correctAnswer != null)
+            {
+                for (int j = 0; j < tasks[i].correctAnswer.Length; j++)
+                {
+                    if (tasks[i].taskInput.text == tasks[i].correctAnswer[j].ToLower())
+                    {
+                        SetTaskComplete(tasks[i].taskId);
+                        return;
+                    }
+                }
             }
         }
     }

@@ -36,6 +36,8 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (UiManager.Instance.startPanel.activeSelf) return;
+
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f) timeOver = 1f;
 
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0f) timeUnder = 0f;

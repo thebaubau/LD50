@@ -52,7 +52,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         //rect = GetComponent<RectTransform>();
 
         //Debug.Log(rect.name + " rect");
-        newPosition = rect.position + new Vector3(offset.x, offset.y, 0);
+        newPosition = rect.position + new Vector3(offset.x / 2, offset.y / 2, 0);
         //newPosition = currentMousePosition;
         oldPosition = rect.position;
 
@@ -86,7 +86,7 @@ public class Draggable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDra
         rectTransform.GetWorldCorners(corners);
         //rectTransform.GetLocalCorners(corners);
         int visibleCorners = 0;
-        Rect rect = new Rect(0, 0, canvasRect.rect.width / 2, canvasRect.rect.height / 2);
+        Rect rect = new Rect(0, 0, canvasRect.rect.width, canvasRect.rect.height);
         //Rect rect = new Rect(0, 0, 1280, 1024);
 
         foreach (Vector3 corner in corners)

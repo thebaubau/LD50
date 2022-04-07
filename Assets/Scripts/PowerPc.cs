@@ -21,8 +21,10 @@ public class PowerPc : MonoBehaviour
     [SerializeField] private AudioClip powerOnLamp;
     [SerializeField] private AudioClip powerOffLamp;
 
+
     private Color red = new Color(212, 0, 0, 181);
     private Color green = new Color(0, 193, 0, 181);
+
     private AudioSource audioSource;
     private bool pcState = false;
     private bool monitorState = false;
@@ -35,6 +37,8 @@ public class PowerPc : MonoBehaviour
 
     public void TurnPcOnOff()
     {
+        Image img = powerPc.GetComponent<Image>();
+
         if (powerPc.gameObject.activeSelf)
         {
             if (pcState.Equals(false))
@@ -42,7 +46,7 @@ public class PowerPc : MonoBehaviour
                 pcState = true;
                 //audioSource.clip = powerPcAudio;
                 audioSource.PlayOneShot(powerPcAudio);
-                powerPc.GetComponent<Image>().color = green;
+                img.color = green;
                 powerPc.transform.Rotate(0, 0, 180);
                 tutorialPowerPc.SetActive(false);
                 StartCoroutine(BootSequence());
@@ -53,7 +57,7 @@ public class PowerPc : MonoBehaviour
             {
                 pcState = false;
                 audioSource.PlayOneShot(powerPcAudio);
-                powerPc.GetComponent<Image>().color = red;
+                img.color = red;
                 powerPc.transform.Rotate(0, 0, -180);
                 boot.GetComponent<Image>().enabled = false;
                 loading.SetActive(false);
@@ -80,7 +84,7 @@ public class PowerPc : MonoBehaviour
             else
             {
                 monitorState = false;
-                TaskCompletion.Instance.SetTaskComplete(1);
+                if (screen.activeSelf) TaskCompletion.Instance.SetTaskComplete(1);
                 audioSource.PlayOneShot(powerMonitorOffAudio);
                 powerMonitor.GetComponent<Image>().color = red;
                 monitor.SetActive(false);

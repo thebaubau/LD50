@@ -5,15 +5,10 @@ using UnityEngine.Video;
 
 public class PlayVideo : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private string videoName;
+    
     void Start()
     {
-        GetComponent<VideoPlayer>().url = System.IO.Path.Combine(Application.streamingAssetsPath, "training.mp4");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        GetComponent<VideoPlayer>().url = System.IO.Path.Combine(Application.streamingAssetsPath, videoName);
     }
 }
