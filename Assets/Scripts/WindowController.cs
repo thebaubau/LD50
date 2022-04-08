@@ -23,7 +23,7 @@ public class WindowController : MonoBehaviour
     public void CloseWindow()
     {
         //button.gameObject.SetActive(false);
-        Camera.main.GetComponent<AudioSource>().volume = 1f;
+        //Camera.main.GetComponent<AudioSource>().volume = 0.2f;
         
         gameObject.SetActive(false);
     }

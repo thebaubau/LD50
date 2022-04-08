@@ -9,6 +9,7 @@ public class OpenWindow : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject windowType;
     [SerializeField] private GameObject windowTitle;
     [SerializeField] private GameObject game;
+    private AudioSource audioSource;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -19,6 +20,7 @@ public class OpenWindow : MonoBehaviour, IPointerClickHandler
             windowType.SetActive(true);
             windowType.GetComponentInChildren<TextMeshProUGUI>().SetText(windowTitle.GetComponent<TextMeshProUGUI>().text);
             if (game) game.SetActive(true);
+            if (GetComponent<AudioSource>() != null) GetComponent<AudioSource>().Play();
         }
     }
 

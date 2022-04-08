@@ -11,6 +11,7 @@ public class UiManager : MonoBehaviour
     public GameObject winPanel;
     public TextMeshProUGUI winningQuote;
     public GameObject background;
+    public GameObject spotLight;
 
     public Sprite[] bgSprites;
     public bool mouseBought = false;
@@ -57,7 +58,16 @@ public class UiManager : MonoBehaviour
     public void AddMouse()
     {
         mouseBought = true;
-        bgSprite.sprite = bgSprites[0];
+
+        if (spotLight.activeSelf)
+        {
+            bgSprite.sprite = bgSprites[0];
+        }
+        else
+        {
+            bgSprite.sprite = bgSprites[2];
+        }
+
     }
 
     public void Win()

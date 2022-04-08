@@ -55,7 +55,7 @@ public class PongGameManager : MonoBehaviour
     {
         playerOneScoreText.text = PlayerScore1.ToString();
         playerTwoScoreText.text = PlayerScore2.ToString();
-        if (PlayerScore1 == 10 || PlayerScore2 == 10)
+        if (PlayerScore1 == 4 || PlayerScore2 == 4)
         {
             TaskCompletion.Instance.SetTaskComplete(5);
         }

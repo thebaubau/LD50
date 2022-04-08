@@ -48,7 +48,7 @@ public class BallControl : MonoBehaviour
         {
             Vector2 vel;
             vel.x = rb2d.velocity.x;
-            vel.y = (rb2d.velocity.y / 2) + (coll.collider.attachedRigidbody.velocity.y / 3);
+            vel.y = (rb2d.velocity.y / 2) + (coll.collider.attachedRigidbody.velocity.y / 3) + Random.Range(-3f, 3f);
             rb2d.velocity = vel;
         }
     }

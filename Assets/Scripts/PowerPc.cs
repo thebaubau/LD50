@@ -9,6 +9,10 @@ public class PowerPc : MonoBehaviour
     [SerializeField] private GameObject tutorialPowerPc;
     [SerializeField] private GameObject boot, loading, screen;
     [SerializeField] private AudioClip powerPcAudio;
+    [SerializeField] private AudioClip powerOnSound;
+    [SerializeField] private AudioClip bootPc;
+    [SerializeField] private AudioClip pcSound;
+    [SerializeField] private AudioClip pcSoundOff;
 
     [SerializeField] private Button powerMonitor;
     [SerializeField] private GameObject tutorialPowerMonitor;
@@ -33,6 +37,8 @@ public class PowerPc : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        audioSource.clip = pcSound;
+
     }
 
     public void TurnPcOnOff()
@@ -45,7 +51,7 @@ public class PowerPc : MonoBehaviour
             {
                 pcState = true;
                 //audioSource.clip = powerPcAudio;
-                audioSource.PlayOneShot(powerPcAudio);
+
                 img.color = green;
                 powerPc.transform.Rotate(0, 0, 180);
                 tutorialPowerPc.SetActive(false);
@@ -56,7 +62,10 @@ public class PowerPc : MonoBehaviour
             else
             {
                 pcState = false;
+                audioSource.loop = false;
+                audioSource.Stop();
                 audioSource.PlayOneShot(powerPcAudio);
+                audioSource.PlayOneShot(pcSoundOff);
                 img.color = red;
                 powerPc.transform.Rotate(0, 0, -180);
                 boot.GetComponent<Image>().enabled = false;
@@ -148,8 +157,17 @@ public class PowerPc : MonoBehaviour
 
     private IEnumerator BootSequence()
     {
+        audioSource.PlayOneShot(powerPcAudio);
+        yield return new WaitForSeconds(0.5f);
+        audioSource.PlayOneShot(powerOnSound);
         boot.GetComponent<Image>().enabled = true;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1f);
+        audioSource.PlayOneShot(bootPc);
+        yield return new WaitForSeconds(1f);
+        audioSource.loop = true;
+        audioSource.Play();
+        yield return new WaitForSeconds(2f);
+        
         boot.GetComponent<Image>().enabled = false;
         loading.SetActive(true);
 

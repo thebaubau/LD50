@@ -63,7 +63,7 @@ public class TaskCompletion : MonoBehaviour
         allTasks.Add(new GameTask() { taskId = 2, taskString = "Do It _____", hasInput = true, correctAnswer = new string[] { "later" } });
         allTasks.Add(new GameTask() { taskId = 3, taskString = "Upgrade PC", hasInput = false, correctAnswer = null });
         allTasks.Add(new GameTask() { taskId = 4, taskString = "Watch a video", hasInput = false, correctAnswer = null });
-        allTasks.Add(new GameTask() { taskId = 5, taskString = "Score 10 at PONG", hasInput = false, correctAnswer = null });
+        allTasks.Add(new GameTask() { taskId = 5, taskString = "Score 4 at PONG", hasInput = false, correctAnswer = null });
         allTasks.Add(new GameTask() { taskId = 6, taskString = "Too much light in the room", hasInput = false, correctAnswer = null });
         allTasks.Add(new GameTask() { 
             taskId = 7, 
