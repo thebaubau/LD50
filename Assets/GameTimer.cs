@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameTimer : MonoBehaviour
 {
     private TextMeshProUGUI timer;
-    private int duration = 600;
+    private int duration = 540;
     private int startingHour = 9;
     private bool isCountingDown = false;
 
